@@ -1,0 +1,4522 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>植物園 - 祭、優太</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        /* General */
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+    font-weight: 700;
+}
+
+body {
+    font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    object-fit: contain;
+}
+
+.markdown {
+    max-width: 100%;
+    line-height: 1.3;
+    overflow-wrap: break-word;
+}
+
+.preserve-whitespace {
+    white-space: pre-wrap;
+}
+
+.spoiler {
+    /* width: fit-content; */
+    display: inline-block;
+    /* This is more consistent across browsers, the old attribute worked well under Chrome but not FireFox. */
+}
+
+.spoiler--hidden {
+    cursor: pointer;
+}
+
+.spoiler-text {
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-text {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler--hidden .spoiler-text::selection {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-image {
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.spoiler--hidden .spoiler-image * {
+    filter: blur(44px);
+}
+
+.spoiler--hidden .spoiler-image:after {
+    content: "SPOILER";
+    color: #dcddde;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 600;
+    padding: 100%;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    font-size: 0.9em;
+}
+
+.spoiler--hidden:hover .spoiler-image:after {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.quote {
+    margin: 0.1em 0;
+    padding-left: 0.6em;
+    border-left: 4px solid;
+    border-radius: 3px;
+}
+
+.pre {
+    font-family: "Consolas", "Courier New", Courier, monospace;
+}
+
+.pre--multiline {
+    margin-top: 0.25em;
+    padding: 0.5em;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+.pre--inline {
+    padding: 2px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+.mention {
+    border-radius: 3px;
+    padding: 0 2px;
+    color: #7289da;
+    background: rgba(114, 137, 218, .1);
+    font-weight: 500;
+}
+
+.emoji {
+    width: 1.25em;
+    height: 1.25em;
+    margin: 0 0.06em;
+    vertical-align: -0.4em;
+}
+
+.emoji--small {
+    width: 1em;
+    height: 1em;
+}
+
+.emoji--large {
+    width: 2.8em;
+    height: 2.8em;
+}
+
+/* Preamble */
+
+.preamble {
+    display: grid;
+    margin: 0 0.3em 0.6em 0.3em;
+    max-width: 100%;
+    grid-template-columns: auto 1fr;
+}
+
+.preamble__guild-icon-container {
+    grid-column: 1;
+}
+
+.preamble__guild-icon {
+    max-width: 88px;
+    max-height: 88px;
+}
+
+.preamble__entries-container {
+    grid-column: 2;
+    margin-left: 0.6em;
+}
+
+.preamble__entry {
+    font-size: 1.4em;
+}
+
+.preamble__entry--small {
+    font-size: 1em;
+}
+
+/* Chatlog */
+
+.chatlog {
+    max-width: 100%;
+}
+
+.chatlog__message-group {
+    display: grid;
+    margin: 0 0.6em;
+    padding: 0.9em 0;
+    border-top: 1px solid;
+    grid-template-columns: auto 1fr;
+}
+
+.chatlog__reference-symbol {
+    grid-column: 1;
+    border-style: solid;
+    border-width: 2px 0 0 2px;
+    border-radius: 8px 0 0 0;
+    margin-left: 16px;
+    margin-top: 8px;
+}
+
+.chatlog__reference {
+    display: flex;
+    grid-column: 2;
+    margin-left: 1.2em;
+    margin-bottom: 0.25em;
+    font-size: 0.875em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    align-items: center;
+}
+
+.chatlog__reference-avatar {
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    margin-right: 0.25em;
+}
+
+.chatlog__reference-name {
+    margin-right: 0.25em;
+    font-weight: 600;
+}
+
+.chatlog__reference-link {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chatlog__reference-link:hover {
+    text-decoration: none;
+}
+
+.chatlog__reference-content > * {
+    display: inline;
+}
+
+.chatlog__reference-edited-timestamp {
+    margin-left: 0.25em;
+    font-size: 0.8em;
+}
+
+.chatlog__author-avatar-container {
+    grid-column: 1;
+    width: 40px;
+    height: 40px;
+}
+
+.chatlog__author-avatar {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+.chatlog__messages {
+    grid-column: 2;
+    margin-left: 1.2em;
+    min-width: 50%;
+}
+
+.chatlog__author-name {
+    font-weight: 500;
+}
+
+.chatlog__timestamp {
+    margin-left: 0.3em;
+    font-size: 0.75em;
+}
+
+.chatlog__message {
+    padding: 0.1em 0.3em;
+    margin: 0 -0.3em;
+    background-color: transparent;
+    transition: background-color 1s ease;
+}
+
+.chatlog__content {
+    font-size: 0.95em;
+    word-wrap: break-word;
+}
+
+.chatlog__edited-timestamp {
+    margin-left: 0.15em;
+    font-size: 0.8em;
+}
+
+.chatlog__attachment {
+    margin-top: 0.3em;
+}
+
+.chatlog__attachment-thumbnail {
+    vertical-align: top;
+    max-width: 45vw;
+    max-height: 500px;
+    border-radius: 3px;
+}
+
+.chatlog__attachment-container {
+    height: 40px;
+    width: 100%;
+    max-width: 520px;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.chatlog__attachment-icon {
+    float: left;
+    height: 100%;
+    margin-right: 10px;
+}
+
+.chatlog__attachment-icon > .a {
+    fill: #f4f5fb;
+    d: path("M50,935a25,25,0,0,1-25-25V50A25,25,0,0,1,50,25H519.6L695,201.32V910a25,25,0,0,1-25,25Z");
+}
+
+.chatlog__attachment-icon > .b {
+    fill: #7789c4;
+    d: path("M509.21,50,670,211.63V910H50V50H509.21M530,0H50A50,50,0,0,0,0,50V910a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50h0V191Z");
+}
+
+.chatlog__attachment-icon > .c {
+    fill: #f4f5fb;
+    d: path("M530,215a25,25,0,0,1-25-25V50a25,25,0,0,1,16.23-23.41L693.41,198.77A25,25,0,0,1,670,215Z");
+}
+
+.chatlog__attachment-icon > .d {
+    fill: #7789c4;
+    d: path("M530,70.71,649.29,190H530V70.71M530,0a50,50,0,0,0-50,50V190a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50Z");
+}
+
+.chatlog__attachment-filesize {
+    color: #72767d;
+    font-size: 12px;
+}
+
+.chatlog__attachment-filename {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.chatlog__embed {
+    display: flex;
+    margin-top: 0.3em;
+    max-width: 520px;
+}
+
+.chatlog__embed-color-pill {
+    flex-shrink: 0;
+    width: 0.25em;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.chatlog__embed-content-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em 0.6em;
+    border: 1px solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.chatlog__embed-content {
+    display: flex;
+    width: 100%;
+}
+
+.chatlog__embed-text {
+    flex: 1;
+}
+
+.chatlog__embed-author {
+    display: flex;
+    margin-bottom: 0.3em;
+    align-items: center;
+}
+
+.chatlog__embed-author-icon {
+    margin-right: 0.5em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.chatlog__embed-author-name {
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-title {
+    margin-bottom: 0.2em;
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-description {
+    font-weight: 500;
+    font-size: 0.85em;
+}
+
+.chatlog__embed-fields {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chatlog__embed-field {
+    flex: 0;
+    min-width: 100%;
+    max-width: 506px;
+    padding-top: 0.6em;
+    font-size: 0.875em;
+}
+
+.chatlog__embed-field--inline {
+    flex: 1;
+    flex-basis: auto;
+    min-width: 150px;
+}
+
+.chatlog__embed-field-name {
+    margin-bottom: 0.2em;
+    font-weight: 600;
+}
+
+.chatlog__embed-field-value {
+    font-weight: 500;
+}
+
+.chatlog__embed-thumbnail {
+    flex: 0;
+    margin-left: 1.2em;
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-image-container {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-image {
+    max-width: 500px;
+    max-height: 400px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-footer {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-footer-icon {
+    margin-right: 0.2em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.chatlog__embed-footer-text {
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+.chatlog__reactions {
+    display: flex;
+}
+
+.chatlog__reaction {
+    display: flex;
+    align-items: center;
+    margin: 0.35em 0.1em 0.1em 0.1em;
+    padding: 0.2em 0.35em;
+    border-radius: 3px;
+}
+
+.chatlog__reaction-count {
+    min-width: 9px;
+    margin-left: 0.35em;
+    font-size: 0.875em;
+}
+
+.chatlog__bot-tag {
+    position: relative;
+    top: -.2em;
+    margin-left: 0.3em;
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    vertical-align: middle;
+    line-height: 1.3;
+    background: #7289da;
+    color: #ffffff;
+    font-size: 0.625em;
+    font-weight: 500;
+}
+
+/* Postamble */
+
+.postamble {
+    margin: 1.4em 0.3em 0.6em 0.3em;
+    padding: 1em;
+    border-top: 1px solid;
+}
+    </style>
+    <style>
+        /* General */
+
+body {
+    background-color: #36393e;
+    color: #dcddde;
+}
+
+a {
+    color: #0096cf;
+}
+
+.spoiler-text {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.spoiler--hidden .spoiler-text {
+    background-color: #202225;
+}
+
+.spoiler--hidden:hover .spoiler-text {
+    background-color: rgba(32, 34, 37, 0.8);
+}
+
+.quote {
+    border-color: #4f545c;
+}
+
+.pre {
+    background-color: #2f3136 !important;
+}
+
+.pre--multiline {
+    border-color: #282b30 !important;
+    color: #b9bbbe !important;
+}
+
+/* === Preamble === */
+
+.preamble__entry {
+    color: #ffffff;
+}
+
+/* Chatlog */
+
+.chatlog__message-group {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.chatlog__reference-symbol {
+    border-color: #4f545c;
+}
+
+.chatlog__reference {
+    color: #b5b6b8;
+}
+
+.chatlog__reference-link {
+    color: #b5b6b8;
+}
+
+.chatlog__reference-link:hover {
+    color: #ffffff;
+}
+
+.chatlog__reference-edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__author-name {
+    color: #ffffff;
+}
+
+.chatlog__timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__message--highlighted {
+    background-color: rgba(114, 137, 218, 0.2) !important;
+}
+
+.chatlog__message--pinned {
+    background-color: rgba(249, 168, 37, 0.05);
+}
+
+.chatlog__attachment-container {
+    background-color: #2f3136;
+    border-color: #292b2f;
+}
+
+.chatlog__edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__embed-color-pill--default {
+    background-color: rgba(79, 84, 92, 1);
+}
+
+.chatlog__embed-content-container {
+    background-color: rgba(46, 48, 54, 0.3);
+    border-color: rgba(46, 48, 54, 0.6);
+}
+
+.chatlog__embed-author-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-author-name-link {
+    color: #ffffff;
+}
+
+.chatlog__embed-title {
+    color: #ffffff;
+}
+
+.chatlog__embed-description {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-field-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-field-value {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-footer {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__reaction {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.chatlog__reaction-count {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Postamble */
+
+.postamble {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.postamble__entry {
+    color: #ffffff;
+}
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler--hidden');
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="https://cdn.discordapp.com/icons/805107066934001705/cd905ff687530dc35a179fce3bcd6c3c.png" alt="Guild icon">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">植物園</div>
+        <div class="preamble__entry">庭師組的各位真的有夠可愛的 / 祭、優太</div>
+
+
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 01:47 PM</span>
+
+            <div class="chatlog__message " data-message-id="829593258384293900" id="message-829593258384293900">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//欸幹沒鎖到人啦</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 01:47 PM</span>
+
+            <div class="chatlog__message " data-message-id="829593350294339584" id="message-829593350294339584">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//嗨課長<img class="emoji " alt="rainbow_seal" title="rainbow_seal" src="https://cdn.discordapp.com/emojis/805120468994490408.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829593468010889216" id="message-829593468010889216">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//課長你還沒吩咐我們調查哪裡欸</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 01:51 PM</span>
+
+            <div class="chatlog__message " data-message-id="829594166329606145" id="message-829594166329606145">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">要去哪再跟我說</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 01:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="829594448508878870" id="message-829594448508878870">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//我等隊友</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829594492255469598" id="message-829594492255469598">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//你先跑那邊</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 01:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="829594561311146005" id="message-829594561311146005">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//那邊還沒關通知啦咩噗</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 01:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="829594672301211659" id="message-829594672301211659">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//<img class="emoji " alt="😯" title="😯" src="https://twemoji.maxcdn.com/2/72x72/1f62f.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829594705431363636" id="message-829594705431363636">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//先跑吧也沒辦法</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829595208814559242" id="message-829595208814559242">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「<img class="emoji " alt="yamero" title="yamero" src="https://cdn.discordapp.com/emojis/805704209210408970.png"> 只剩我們兩個囉，名醫有特別想去的地方嗎？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 02:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="829599141986304020" id="message-829599141986304020">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「優太呢，想去哪裡看看？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829600798216028161" id="message-829600798216028161">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「我個人的話，想去鑑識科或調查總部看看。」
+切換成工作模式，祭的語氣也變得沉穩許多。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829601997497565204" id="message-829601997497565204">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「然後優太……」
+祭走到他的前面，稍稍仰頭注視著小野寺，偏了偏頭
+「嗯……需要精神分析嗎？是不是打擊太大了？」
+庸醫有些擔心的開口</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:12 PM</span>
+
+            <div class="chatlog__message " data-message-id="829614683803484204" id="message-829614683803484204">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「沒事啦，真的。」
+「好啦好啦，有大名醫在身邊的話一定沒事的！」
+「走了走了～去哪裡都可以！」
+「需要治療的時候一定會跟你說的∠( ᐛ 」∠)＿，不用擔心～」
+「難道你覺得我像是那種會忍著的人嗎～」
+「痛一定會大聲～叫出來的。」優太笑了笑，
+「好了別說了，趕快調查吧！去哪去哪∠( ᐛ 」∠)＿」</span>
+
+                                <span class="chatlog__edited-timestamp" title="08-Apr-21 03:14 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:21 PM</span>
+
+            <div class="chatlog__message " data-message-id="829616976032825364" id="message-829616976032825364">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「而且啊—」
+「你們看起來更難過不是嗎？」優太勾起唇角，
+「但是我沒有安慰你們的本領，自己加油啦。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="829628908713803796" id="message-829628908713803796">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「既然沒什麼頭緒，要不要先去鑑識科？」
+「可以去看那些綠綠的東西是不是比較特殊的種類，有沒有更多調查結果。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="829629116646948885" id="message-829629116646948885">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//你怎麼比尤里西斯話還多</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="829629199295053847" id="message-829629199295053847">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//他是尤里的增進版啊</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829629260708184065" id="message-829629260708184065">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//而且你不在我只能跟自己說話<img class="emoji " alt="yamero" title="yamero" src="https://cdn.discordapp.com/emojis/805704209210408970.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="829629270678306876" id="message-829629270678306876">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//把你當成尤里我就覺得很可愛了uwu</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829629315431399425" id="message-829629315431399425">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//剛剛話劇sorry我馬上回</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:12 PM</span>
+
+            <div class="chatlog__message " data-message-id="829629761662877717" id="message-829629761662877717">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//隔壁都跑完一個場景了</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829629773977747517" id="message-829629773977747517">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//你們加油</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829614683803484204&#39;)">
+                    <span class="chatlog__reference-content">
+「沒事啦，真的。」
+「好啦好啦，有大名醫在身邊的話一定沒事的！」
+「走了走了～去哪裡都可以！」
+「需要治療的時候一定會跟你說的∠( ᐛ 」∠)＿，不用擔心～」
+「難道你覺得我像是那種會忍著的人嗎～」
+「痛一定會大聲～叫出來的。」優太笑了笑，
+「好了別說了，趕快調查吧！去哪去哪∠( ᐛ 」∠)＿」                    </span>
+
+                        <span class="chatlog__reference-edited-timestamp" title="08-Apr-21 03:14 PM">(edited)</span>
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:15 PM</span>
+
+            <div class="chatlog__message " data-message-id="829630437084364880" id="message-829630437084364880">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「你別騙我。」
+祭看著優太，隨後嘆了口氣，
+「啊，算了……有需要再找我吧。」
+「優太也別總是把事情悶在心裡。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829630965936291870" id="message-829630965936291870">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「嗯，也好。走吧，順便等屍檢報告。」
+把瀏海撥到耳後，神宮寺祭跟優太往鑑識科的方向走去</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829631096764366848" id="message-829631096764366848">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//水王推線能力是一流的，嗑潑別擔心<img class="emoji " alt="rainbow_seal" title="rainbow_seal" src="https://cdn.discordapp.com/emojis/805120468994490408.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="BokiBoki#0803" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829630437084364880&#39;)">
+                    <span class="chatlog__reference-content">
+「你別騙我。」
+祭看著優太，隨後嘆了口氣，
+「啊，算了……有需要再找我吧。」
+「優太也別總是把事情悶在心裡。」                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="829631256970395649" id="message-829631256970395649">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「有需要會在來找你的～」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829631482074759168" id="message-829631482074759168">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">就大搖大擺跟在祭的後面</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:19 PM</span>
+
+            <div class="chatlog__message " data-message-id="829631625830203393" id="message-829631625830203393">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">祭看了優太一眼
+「……下班後我得好好關照一下你，先工作吧。」
+「醫生的直覺可是很準的。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="829631761017077770" id="message-829631761017077770">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">你們到鑑識科後，剛好看到豬狩正在工作。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="829631888053633044" id="message-829631888053633044">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「豬狩君，有什麼新的進度嗎？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:23 PM</span>
+
+            <div class="chatlog__message " data-message-id="829632652407603252" id="message-829632652407603252">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">正看著顯微鏡的豬狩聞言抬頭，隨後轉了轉脖子。
+「啊—從案發現場回來之後機乎就沒有抬頭休息的機會。」他癟著嘴抱怨道。
+「我現在剛好在研究泉前輩身上的花粉呢。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:25 PM</span>
+
+            <div class="chatlog__message " data-message-id="829632936885485578" id="message-829632936885485578">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「花粉？」
+聞言祭湊過去看了看顯微鏡</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829633238444015657" id="message-829633238444015657">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「我也來幫忙一下吧，原本答應好的。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="829633864631582761" id="message-829633864631582761">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「嗯，不知道祭有沒有看過這種花粉？」
+他讓開了位置讓你也可以從顯微鏡觀察。
+「不是自誇，我是真的看過很—多種植物喔，真的很多。」</span>
+
+                                <span class="chatlog__edited-timestamp" title="08-Apr-21 04:29 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829633953089454141" id="message-829633953089454141">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「但我卻完！全！」
+「沒有看過這種花粉！」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="829634487574855680" id="message-829634487574855680">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「連豬狩君都沒看過……？」
+祭有些訝異，隨後研究起顯微鏡下的花粉</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829636049457250304" id="message-829636049457250304">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">很快的他別開了眼睛，皺了皺眉，臉色有些發白
+「……豬狩君，你有沒有水？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:42 PM</span>
+
+            <div class="chatlog__message " data-message-id="829637347209117746" id="message-829637347209117746">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//我就站在旁邊看吧反正我沒有自然學</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:43 PM</span>
+
+            <div class="chatlog__message " data-message-id="829637482290741338" id="message-829637482290741338">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//你也可以來看ㄚ</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829637515026890763" id="message-829637515026890763">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//能過知識</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:43 PM</span>
+
+            <div class="chatlog__message " data-message-id="829637590583476225" id="message-829637590583476225">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「欸，你怎麼了！」豬狩被祭突如其來的狀態嚇到，也有些慌張。
+「水，水，水，」他開始像要拆掉整個鑑識科一樣翻箱倒櫃。
+「啊！水！」他突然想起什麼似的跑到鑑識科一處，看起來像冰箱的地方拿出了罐瓶裝水。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="829638026534715422" id="message-829638026534715422">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「！」
+「祭？！」
+「發生什麼事了？」優太衝上前查看，有點慌張，</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829638048857194536" id="message-829638048857194536">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「沾到了嗎？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="829638095917547550" id="message-829638095917547550">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">接過對方遞來的水，趕緊灌了幾口，喘了口氣，
+「……抱歉，突然有些不舒服。」
+「我也沒看過這種花粉呢。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829638201039519764" id="message-829638201039519764">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「沒事沒事……」
+感覺好多了，對著優太笑了笑</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:46 PM</span>
+
+            <div class="chatlog__message " data-message-id="829638292315963393" id="message-829638292315963393">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「還好嗎？沒事吧喂！」
+「別嚇我啊⋯⋯」優太嘆了口氣，</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:47 PM</span>
+
+            <div class="chatlog__message " data-message-id="829638514064359425" id="message-829638514064359425">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「可能是因為剛才的案發現場吧，我不太清楚……」
+「果然還是不太能習慣呢……」
+祭苦笑著說道</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829638658725380187" id="message-829638658725380187">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「總之這種花粉可能是新的種類或是特有種。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829639256120098846" id="message-829639256120098846">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「對了，屍體上面的植物，有新的品種之類的東西嗎？」
+「如果沒有的話，或許可以從花粉來調查。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829639769390710795" id="message-829639769390710795">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">祭想了想，又問到
+「三年前的案件，上面也有這樣的花粉嗎？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:58 PM</span>
+
+            <div class="chatlog__message " data-message-id="829641243898281984" id="message-829641243898281984">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「神宮寺祭。」
+「你的臉色很差。」
+「比剛剛看到案發現場更差。」
+「⋯⋯。」
+「算了，當我沒問。」煩躁的抓了抓頭，
+「既然花粉那麼特殊，那我也看一下好了，雖然應該幫助不大。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829641914751778846" id="message-829641914751778846">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//可撥我骰知識ㄇ</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829642071462903848" id="message-829642071462903848">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//edu還是int 我又忘了<img class="emoji " alt="my_eyes" title="my_eyes" src="https://cdn.discordapp.com/emojis/805412147839893515.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:01 PM</span>
+
+            <div class="chatlog__message " data-message-id="829642142536302645" id="message-829642142536302645">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「……我想，可能是我個人的原因吧……」
+祭苦笑道
+「等等，優太，你最好不要看。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829642303324422144" id="message-829642303324422144">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">祭拉住優太的袖子
+「那個花粉真的讓人很不舒服。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:05 PM</span>
+
+            <div class="chatlog__message " data-message-id="829643114678845460" id="message-829643114678845460">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「⋯⋯。」優太皺了一下眉頭，接著收回準備要做的動作，
+「算了。」
+「名醫下一次你就別衝那麼快了。」
+「我的精神可比你好，不像你現在才看一下下就快昏倒了待會怎麼調查—。」
+「要扛你我可扛不動。」優太笑了一下，表情卻是不容拒絕的認真。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="BokiBoki#0803" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829639769390710795&#39;)">
+                    <span class="chatlog__reference-content">
+祭想了想，又問到
+「三年前的案件，上面也有這樣的花粉嗎？」                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:07 PM</span>
+
+            <div class="chatlog__message " data-message-id="829643574596337714" id="message-829643574596337714">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「我不知道...」
+豬狩搖了搖頭。
+「不過如果有，我不可能沒印象的。」
+「我可沒那麼不專業！」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829643114678845460&#39;)">
+                    <span class="chatlog__reference-content">
+「⋯⋯。」優太皺了一下眉頭，接著收回準備要做的動作，
+「算了。」
+「名醫下一次你就別衝那麼快了。」
+「我的精神可比你好，不像你現在才看一下下就快昏倒了待會怎麼調查—。」
+「要扛你我可扛不動。」優太笑了一下，表情卻是不容拒絕的認真。                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="829644019352076338" id="message-829644019352076338">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「你扛的動。」
+祭看了一下優太的身材肯定道
+「放心吧，我會顧好自己的。這次只是個小意外。」
+「優太不用那麼擔心我，沒事的。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="BokiBoki#0803" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829644019352076338&#39;)">
+                    <span class="chatlog__reference-content">
+「你扛的動。」
+祭看了一下優太的身材肯定道
+「放心吧，我會顧好自己的。這次只是個小意外。」
+「優太不用那麼擔心我，沒事的。」                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="829644079498657802" id="message-829644079498657802">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//乾乾幹好好笑</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829644110968520744" id="message-829644110968520744">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//你扛的動</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="莫薩是真愛#4394" style="color: rgb(232,192,42)">矢島正義</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829643574596337714&#39;)">
+                    <span class="chatlog__reference-content">
+「我不知道...」
+豬狩搖了搖頭。
+「不過如果有，我不可能沒印象的。」
+「我可沒那麼不專業！」                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="829644139149656074" id="message-829644139149656074">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//你扛的動</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="莫薩是真愛#4394" style="color: rgb(232,192,42)">矢島正義</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829643574596337714&#39;)">
+                    <span class="chatlog__reference-content">
+「我不知道...」
+豬狩搖了搖頭。
+「不過如果有，我不可能沒印象的。」
+「我可沒那麼不專業！」                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="829644388761075732" id="message-829644388761075732">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「嗯……那就是園丁的手法變了……？」
+「或是來不及清理現場？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829644592356917248" id="message-829644592356917248">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「這個先記著吧，說不定會是重要線索。」
+「麻煩豬狩君了。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="829644615295565875" id="message-829644615295565875">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「⋯⋯。」優太頓了一下，
+「沒事啦，這也是為之後調查擔憂。」
+「<img class="emoji " alt="yamero" title="yamero" src="https://cdn.discordapp.com/emojis/805704209210408970.png"> 不過就算真的扛的動也很累啊—」</span>
+
+                                <span class="chatlog__edited-timestamp" title="08-Apr-21 05:11 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829644784926720001" id="message-829644784926720001">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「啊啊麻煩名偵探啦～」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:14 PM</span>
+
+            <div class="chatlog__message " data-message-id="829645316332191754" id="message-829645316332191754">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「我絕對不會勉強自己啦，我可是最怕死的庸醫耶——」
+祭笑了一下
+「又不像優太君把事情都悶在心裡。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="829646828538036253" id="message-829646828538036253">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「哪有<img class="emoji " alt="yamero" title="yamero" src="https://cdn.discordapp.com/emojis/805704209210408970.png"> 」
+「好啦走吧走吧，既然你看起來不太舒服，要不要走慢一點啊～」
+「但就怕待會大姐頭來罵人了，祭可要自己跟她解釋喔。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:21 PM</span>
+
+            <div class="chatlog__message " data-message-id="829647240909422602" id="message-829647240909422602">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「才不會勒，我好歹也是通過警校訓練的人，才沒有那麼脆弱——」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829647330042839070" id="message-829647330042839070">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">祭反駁道</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="829647391376015402" id="message-829647391376015402">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「好，那晚上來比個伏地挺身<img class="emoji " alt="rainbow_seal" title="rainbow_seal" src="https://cdn.discordapp.com/emojis/805120468994490408.png"> 。」
+「要把體力留到那裡喔。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829647534175682570" id="message-829647534175682570">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">然後跑出去外面，
+「大偵探就拜託你啦—」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:23 PM</span>
+
+            <div class="chatlog__message " data-message-id="829647571903184906" id="message-829647571903184906">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「不要，我討厭運動。學醫人不運動的！」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829647797891891210" id="message-829647797891891210">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">神宮寺說著也跟著優太走了出去
+「豬狩君，那就麻煩你了，我們先去調查總部一趟！」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:24 PM</span>
+
+            <div class="chatlog__message " data-message-id="829647800987680778" id="message-829647800987680778">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「<img class="emoji " alt="rainbow_seal" title="rainbow_seal" src="https://cdn.discordapp.com/emojis/805120468994490408.png"> 我會放水的。」
+「我體力那麼爛跟我比不過份吧<img class="emoji " alt="yamero" title="yamero" src="https://cdn.discordapp.com/emojis/805704209210408970.png"> 」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:25 PM</span>
+
+            <div class="chatlog__message " data-message-id="829648017715888128" id="message-829648017715888128">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">回頭看了一眼對方結實的身材，
+「我懷疑你在嘲諷我但是我沒證據。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:25 PM</span>
+
+            <div class="chatlog__message " data-message-id="829648059184578582" id="message-829648059184578582">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「∠( ᐛ 」∠)＿。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829648112694853632" id="message-829648112694853632">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//簡潔有力的表符</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:25 PM</span>
+
+            <div class="chatlog__message " data-message-id="829648159222267935" id="message-829648159222267935">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「……我拒絕挑戰！」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="829649123384098837" id="message-829649123384098837">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「欸<img class="emoji " alt="yamero" title="yamero" src="https://cdn.discordapp.com/emojis/805704209210408970.png"> 」
+「那就是脆弱實錘了。」
+「那可能警校要重修了，我在找舞大姐商量商量，怎麼讓你在入學強健身體<img class="emoji " alt="rainbow_seal" title="rainbow_seal" src="https://cdn.discordapp.com/emojis/805120468994490408.png"> 。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829649302502113332" id="message-829649302502113332">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「好啦再來呢，祭想去哪裡<img class="emoji " alt="rainbow_seal" title="rainbow_seal" src="https://cdn.discordapp.com/emojis/805120468994490408.png"> 」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:30 PM</span>
+
+            <div class="chatlog__message " data-message-id="829649474371452949" id="message-829649474371452949">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">由於你們走的疾如狂風我補一下豬狩還沒講完的，關於屍體的事</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="829649661568483350" id="message-829649661568483350">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「人家是考學科進來的……！」
+「別想讓我運動，我絕——對不會答應！」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="莫薩是真愛#4394" style="color: rgb(232,192,42)">矢島正義</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829649474371452949&#39;)">
+                    <span class="chatlog__reference-content">
+由於你們走的疾如狂風我補一下豬狩還沒講完的，關於屍體的事                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="829649691443986432" id="message-829649691443986432">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//請</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="829649760536494090" id="message-829649760536494090">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//欸<img class="emoji " alt="cant_understand" title="cant_understand" src="https://cdn.discordapp.com/emojis/805128578496331776.png"> 還有喔</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="829649761908162641" id="message-829649761908162641">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">那我倆站在門口等他說話</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:32 PM</span>
+
+            <div class="chatlog__message " data-message-id="829649833244753930" id="message-829649833244753930">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//我：等你們rp完我就繼續
+//優太跟祭：走囉-</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:32 PM</span>
+
+            <div class="chatlog__message " data-message-id="829649909761835018" id="message-829649909761835018">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//草</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="829650355192070224" id="message-829650355192070224">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//然後走之前你們過個偵查</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="829650419634405387" id="message-829650419634405387">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//他先講完我再走</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="829650475719720970" id="message-829650475719720970">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//他講他講</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:35 PM</span>
+
+            <div class="chatlog__message " data-message-id="829650745216991262" id="message-829650745216991262">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">祭看著豬狩，一臉『請開始您的分析』</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:37 PM</span>
+
+            <div class="chatlog__message " data-message-id="829651185031184404" id="message-829651185031184404">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">那優太看祭停下來，又看到豬狩好像頓了一下感覺好像話沒講完就站在門口看看</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:44 PM</span>
+
+            <div class="chatlog__message chatlog__message--pinned" data-message-id="829652898115223562" id="message-829652898115223562">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「喔喔就是那啥，不知道你剛剛看花粉時有沒有注意到。」
+「雖說是沒看過的花粉，但我可以認出那絕對不是一個植物細胞該有的樣子—反而各個特徵都很像動物細胞。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message chatlog__message--pinned" data-message-id="829653125723455508" id="message-829653125723455508">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「泉前輩屍體上採來的細胞也是，放在顯微鏡下會竄來竄去的，簡直像是活著一樣。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:46 PM</span>
+
+            <div class="chatlog__message " data-message-id="829653368607211560" id="message-829653368607211560">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「<img class="emoji " alt="what" title="what" src="https://cdn.discordapp.com/emojis/805130305593016381.png"> 細胞還活著？」
+「這是神話還是都市傳說嗎？」</span>
+
+                                <span class="chatlog__edited-timestamp" title="08-Apr-21 05:47 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:46 PM</span>
+
+            <div class="chatlog__message " data-message-id="829653542032769044" id="message-829653542032769044">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「……唔？」
+「竟然有這種東西呢……」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829653793477885962" id="message-829653793477885962">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「是新品種嗎……又或是……」
+神宮寺陷入了思索</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:48 PM</span>
+
+            <div class="chatlog__message " data-message-id="829653840923721748" id="message-829653840923721748">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「不知道...我感覺知識都被刷新了呢。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:48 PM</span>
+
+            <div class="chatlog__message " data-message-id="829653913980502017" id="message-829653913980502017">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「我感覺我生物白唸了。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:48 PM</span>
+
+            <div class="chatlog__message " data-message-id="829653938210603029" id="message-829653938210603029">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「真的越來越像，泉立夏當時說的了。」
+「⋯⋯神秘學。」
+「總覺得毛毛的。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:48 PM</span>
+
+            <div class="chatlog__message " data-message-id="829654001712103444" id="message-829654001712103444">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「但我卻不認為那些纏繞泉前輩的...東西？是動物。」
+「怎麼看都是植物啊！」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="BokiBoki#0803" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829653913980502017&#39;)">
+                    <span class="chatlog__reference-content">
+「我感覺我生物白唸了。」                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:48 PM</span>
+
+            <div class="chatlog__message " data-message-id="829654023179206666" id="message-829654023179206666">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「還好我很早就沒念這種東西。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:49 PM</span>
+
+            <div class="chatlog__message " data-message-id="829654105924042772" id="message-829654105924042772">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「生物可是很好玩的！優太沒多讀一些真是可惜了。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:50 PM</span>
+
+            <div class="chatlog__message " data-message-id="829654320621289472" id="message-829654320621289472">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「說不定是另外沾上去的呢……？」
+「偽裝成花粉的某種生物之類的。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:50 PM</span>
+
+            <div class="chatlog__message " data-message-id="829654468454645760" id="message-829654468454645760">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「那種會一直變來變去的東西<img class="emoji " alt="yamero" title="yamero" src="https://cdn.discordapp.com/emojis/805704209210408970.png"> 」
+「小時候老師當時只說，這些是定則，但一定有例外，還要背那麼多例外，想到就頭痛，我還是算了吧<img class="emoji " alt="yamero" title="yamero" src="https://cdn.discordapp.com/emojis/805704209210408970.png"> 。」
+「練體能就夠操了，其他免談<img class="emoji " alt="yamero" title="yamero" src="https://cdn.discordapp.com/emojis/805704209210408970.png"> 。」</span>
+
+                                <span class="chatlog__edited-timestamp" title="09-Apr-21 12:11 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:51 PM</span>
+
+            <div class="chatlog__message " data-message-id="829654607553757185" id="message-829654607553757185">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//不要代入個人感情</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:51 PM</span>
+
+            <div class="chatlog__message " data-message-id="829654660456775680" id="message-829654660456775680">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//帶入了<img class="emoji " alt="yamero" title="yamero" src="https://cdn.discordapp.com/emojis/805704209210408970.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:51 PM</span>
+
+            <div class="chatlog__message " data-message-id="829654724043210762" id="message-829654724043210762">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「生物的確很好玩呢——」
+「我今天晚上來好好複習一下吧。好一陣子沒碰了。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829654752311902239" id="message-829654752311902239">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//眼紅<img class="emoji " alt="rainbow_seal" title="rainbow_seal" src="https://cdn.discordapp.com/emojis/805120468994490408.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="BokiBoki#0803" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829654320621289472&#39;)">
+                    <span class="chatlog__reference-content">
+「說不定是另外沾上去的呢……？」
+「偽裝成花粉的某種生物之類的。」                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="829654955459477534" id="message-829654955459477534">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「不知道呢......啊，這種推理還是交給別人吧，我只負責鑑識啊—」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829655003752038410" id="message-829655003752038410">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「對了是說！」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="829655023507341322" id="message-829655023507341322">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//前輩的細胞是前輩的屍體嗎（？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="829655057532059678" id="message-829655057532059678">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//屍體上的細胞</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="829655093878980629" id="message-829655093878980629">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//ㄡㄡㄡ</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829655138670215258" id="message-829655138670215258">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//他的身體細胞還活著？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829655277745078284" id="message-829655277745078284">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:54 PM</span>
+
+            <div class="chatlog__message " data-message-id="829655348071235604" id="message-829655348071235604">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">豬狩原本因陷入苦惱而黯淡的眼神突然亮起。
+「我昨天不是說我忘記我想問你們什麼嗎！我昨天晚上洗澡時想起來了呢。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="BokiBoki#0803" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829655138670215258&#39;)">
+                    <span class="chatlog__reference-content">
+//他的身體細胞還活著？                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:54 PM</span>
+
+            <div class="chatlog__message " data-message-id="829655450256539658" id="message-829655450256539658">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//度 類似那種感覺 而且還會動（像阿米巴那樣動</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="莫薩是真愛#4394" style="color: rgb(232,192,42)">矢島正義</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829654955459477534&#39;)">
+                    <span class="chatlog__reference-content">
+「不知道呢......啊，這種推理還是交給別人吧，我只負責鑑識啊—」                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:54 PM</span>
+
+            <div class="chatlog__message " data-message-id="829655459363160065" id="message-829655459363160065">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「嗯……說的也是，交給那些學者研究吧。」
+祭想了想還是決定離那東西遠一點</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="莫薩是真愛#4394" style="color: rgb(232,192,42)">矢島正義</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829655348071235604&#39;)">
+                    <span class="chatlog__reference-content">
+豬狩原本因陷入苦惱而黯淡的眼神突然亮起。
+「我昨天不是說我忘記我想問你們什麼嗎！我昨天晚上洗澡時想起來了呢。」                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 05:55 PM</span>
+
+            <div class="chatlog__message " data-message-id="829655664472227870" id="message-829655664472227870">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「浴室果然是奇妙的地方啊！」
+祭讚嘆道
+「所以到底是什麼問題呢——？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:00 PM</span>
+
+            <div class="chatlog__message " data-message-id="829656860150988830" id="message-829656860150988830">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「我記得你們好像當時在調查些什麼吧，但死都不跟我說呢！」
+豬狩一臉受傷。
+「一定是因為太難過所以才忘了！」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:00 PM</span>
+
+            <div class="chatlog__message " data-message-id="829656967298809886" id="message-829656967298809886">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//他的記憶力好好歐</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="莫薩是真愛#4394" style="color: rgb(232,192,42)">矢島正義</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829656860150988830&#39;)">
+                    <span class="chatlog__reference-content">
+「我記得你們好像當時在調查些什麼吧，但死都不跟我說呢！」
+豬狩一臉受傷。
+「一定是因為太難過所以才忘了！」                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="829658464123879474" id="message-829658464123879474">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「欸……居然有這種事情——？」
+「雖然我忘了但是……對不起啦豬狩君。」
+祭雙手合十語帶歉意的說道
+「……可能是跟個人隱私有關的東西吧、嗯……？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:07 PM</span>
+
+            <div class="chatlog__message " data-message-id="829658749785342034" id="message-829658749785342034">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「哼哼，該不會其實是用公費出去玩吧，瞞著我。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="829659092645314560" id="message-829659092645314560">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「……！怎麼會，要玩的話也會拉著豬狩君一起去的！」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829659372782878731" id="message-829659372782878731">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「嗯——我再問問課長好了？」
+「她感覺會記得！」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="829659566543339520" id="message-829659566543339520">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「好啦好啦—」豬狩擺了擺手。
+「那你們接著加油啦—我再研究下那個花粉怪！」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:12 PM</span>
+
+            <div class="chatlog__message " data-message-id="829659952590880801" id="message-829659952590880801">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「好呦——辛苦了！」
+接著，祭像是注意到了什麼，走到了小白板的前面，
+「這個是，泉前輩的……」
+他頓了一下
+「屍檢報告什麼時候會出來呢？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="829660877955399700" id="message-829660877955399700">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「至少也得到晚上吧。」豬狩無奈的聳了聳肩，「我畢竟只有一個人。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:19 PM</span>
+
+            <div class="chatlog__message " data-message-id="829661672842199081" id="message-829661672842199081">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「豬狩先生……只有你負責分析嗎？」
+祭有些意外看著對方
+「如果等等調查了差不多，我也來幫忙好了。」
+說完他又看了看那些屍體的照片，心裡不禁一陣發酸。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:20 PM</span>
+
+            <div class="chatlog__message " data-message-id="829662089358344223" id="message-829662089358344223">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「對啊...」說到這裡豬狩垂下了頭。
+「原本還有一個前輩的說，現在就剩我了。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:21 PM</span>
+
+            <div class="chatlog__message " data-message-id="829662177489059843" id="message-829662177489059843">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//誰ㄚ，原ㄡ？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:21 PM</span>
+
+            <div class="chatlog__message " data-message-id="829662297856671744" id="message-829662297856671744">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//你問他ㄚ</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="829662469441060894" id="message-829662469441060894">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「前輩？」
+祭疑惑的問道，
+「好像沒聽你提過呢。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="829662578463997983" id="message-829662578463997983">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「噢，是個很厲害的前輩呢，當時相模前輩的屍體就是他獨自負責的。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:24 PM</span>
+
+            <div class="chatlog__message " data-message-id="829662881296941106" id="message-829662881296941106">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「原姐的案子？！」
+祭瞪大了眼睛，
+「那他現在去哪了？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:24 PM</span>
+
+            <div class="chatlog__message " data-message-id="829663038264967188" id="message-829663038264967188">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「前年出了個意外過世了。」豬狩想到這裡更低落了。
+「結果鑑識科就剩下我一人了呢。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="829663962668466176" id="message-829663962668466176">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//這警察局人手好缺</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="829664051331989555" id="message-829664051331989555">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//可能這年頭大家都去當園丁了</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:30 PM</span>
+
+            <div class="chatlog__message " data-message-id="829664375773331506" id="message-829664375773331506">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//草啊</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829665817313804308" id="message-829665817313804308">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「……啊，請節哀。」
+走過去拍了拍豬狩的肩膀，
+「對了，他當時的研究資料都還留著嗎，我想確認一下。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829666109857726514" id="message-829666109857726514">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「鑑識科人手真的不太夠呢……我等等跟的場建議下招募新人進來吧。」
+「不然你工作壓力好大，對健康不好。」</span>
+
+                                <span class="chatlog__edited-timestamp" title="08-Apr-21 06:37 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/654873955907403779/0e6792834e61928b6384a9a114f0fa61.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="子髾（芸芸醬）#9768" data-user-id="654873955907403779" style="color: rgb(202,145,0)">月橋☆非天小男孩☆彌安芸</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:37 PM</span>
+
+            <div class="chatlog__message " data-message-id="829666311818575903" id="message-829666311818575903">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//社畜：我要當園丁！我渴望自由！</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:37 PM</span>
+
+            <div class="chatlog__message " data-message-id="829666378872651797" id="message-829666378872651797">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//草草草</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829666447575220235" id="message-829666447575220235">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//結果豬狩就去當園丁了（幹啊</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="BokiBoki#0803" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829665817313804308&#39;)">
+                    <span class="chatlog__reference-content">
+「……啊，請節哀。」
+走過去拍了拍豬狩的肩膀，
+「對了，他當時的研究資料都還留著嗎，我想確認一下。」                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="829666858654498827" id="message-829666858654498827">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「應該在資料室喔。」
+「是說，別告訴的場君啦—到時候被以為想偷懶就不好了。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:41 PM</span>
+
+            <div class="chatlog__message " data-message-id="829667386281426954" id="message-829667386281426954">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「……啊，課長他們過去了，等等再跟他們確認好了！」
+「可是這樣子豬狩君的身體會垮掉的，這可不行——」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:44 PM</span>
+
+            <div class="chatlog__message " data-message-id="829668058834403338" id="message-829668058834403338">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「唔，祭真的對我好好—」豬狩露出感動的眼神，「但沒事的！我可是優秀的鑑識員！早就獻上我的肝給警局啦！」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 06:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="829668148336525332" id="message-829668148336525332">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//嗚嗚嗚豬狩君辛苦了，爆肝人懂你</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 07:01 PM</span>
+
+            <div class="chatlog__message " data-message-id="829672176159424552" id="message-829672176159424552">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「辛苦了，肝要好好保重哇。」
+珍惜肝臟，遠離三類組——神宮寺祭覺得這句話實在是太真實了。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 07:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="829672437964734465" id="message-829672437964734465">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「啊啊對呀那樣超不健康的，至少我還知道整體工作累死了。」
+「說真的，一個人工作很辛苦的。」
+「以後一定多帶豬狩君出去玩，不可以嫌我煩喔<img class="emoji " alt="rainbow_seal" title="rainbow_seal" src="https://cdn.discordapp.com/emojis/805120468994490408.png"> 」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="莫薩是真愛#4394" style="color: rgb(232,192,42)">矢島正義</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829663038264967188&#39;)">
+                    <span class="chatlog__reference-content">
+「前年出了個意外過世了。」豬狩想到這裡更低落了。
+「結果鑑識科就剩下我一人了呢。」                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 07:04 PM</span>
+
+            <div class="chatlog__message " data-message-id="829672987489730570" id="message-829672987489730570">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「出意外過世⋯⋯」
+「請豬狩君節哀⋯⋯。」優太若有所思，顯得有些難過</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829672437964734465&#39;)">
+                    <span class="chatlog__reference-content">
+「啊啊對呀那樣超不健康的，至少我還知道整體工作累死了。」
+「說真的，一個人工作很辛苦的。」
+「以後一定多帶豬狩君出去玩，不可以嫌我煩喔<img class="emoji " alt="rainbow_seal" title="rainbow_seal" src="https://cdn.discordapp.com/emojis/805120468994490408.png"> 」                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 07:32 PM</span>
+
+            <div class="chatlog__message " data-message-id="829680184780783646" id="message-829680184780783646">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「好耶！」豬狩愉快的笑了起來。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 09:40 PM</span>
+
+            <div class="chatlog__message " data-message-id="829712272153640990" id="message-829712272153640990">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//<img class="emoji " alt="howyeah" title="howyeah" src="https://cdn.discordapp.com/emojis/806427721361522688.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 09:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="829713501752262667" id="message-829713501752262667">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//<img class="emoji " alt="howyeah" title="howyeah" src="https://cdn.discordapp.com/emojis/806427721361522688.png"></span>
+
+                                <span class="chatlog__edited-timestamp" title="08-Apr-21 09:45 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829714405124997140" id="message-829714405124997140">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//可撥都說完了嗎</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">09-Apr-21 06:38 AM</span>
+
+            <div class="chatlog__message " data-message-id="829847692535529514" id="message-829847692535529514">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">說著豬狩又回去做自己的事了。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744855955438567424/6f6eaec810236d4a657faf26d84f0bc5.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)#9300" data-user-id="744855955438567424" style="color: rgb(156,40,212)">小野寺優太(⁎⁍̴̛ᴗ⁍̴̛⁎)</span>
+
+
+        <span class="chatlog__timestamp">09-Apr-21 07:19 AM</span>
+
+            <div class="chatlog__message " data-message-id="829858130560286730" id="message-829858130560286730">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">那優太走出房間外了，
+「名醫有任何想法嗎？」衝著他笑了笑，走一段路之後才問他，
+「你覺得研究原姊的鑑識科人員是意外死亡的嗎？」
+「還有⋯⋯我們是不是忘記了什麼重要的事情⋯⋯」表情變得有些苦惱，
+「雖然我真的很笨忘東忘西的，但如果連大名醫都不記得也是蠻奇怪的啦。」
+「怎麼會忘記看起來非常重要又急著調查的事情呢？」
+「⋯⋯。」優太停頓了一下，
+「啊對了，要不要聯絡一下大姐頭，說不定他們剛剛有查到之前的研究資料可以比對！」
+「雖然是這麼說啦，不知道他們有沒有找到⋯⋯」想到恐怖的書堆，優太尷尬的笑了笑，
+「也不知道如果查查零課自己的話，會不會找到豬狩君當時說的調查。」
+「雖然這種動作真的像在搜尋引擎上打自己名字一樣無聊<img class="emoji " alt="cry" title="cry" src="https://cdn.discordapp.com/emojis/805282154221273139.png"> ，但是我的廢物腦袋真的運轉不過來了。」
+「感覺像在看電影一樣，一下失憶一下又有不合常理的怪物什麼的，說不定當時的我們還給現在留下線索也說不定。」
+「零課的英雄大片！∠( ᐛ 」∠)＿」</span>
+
+                                <span class="chatlog__edited-timestamp" title="09-Apr-21 07:20 AM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744857273725091851/7aa101e417d100ef89b249b70a568892.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="BokiBoki#0803" data-user-id="744857273725091851" style="color: rgb(202,145,0)">大魔王的史萊姆君</span>
+
+
+        <span class="chatlog__timestamp">09-Apr-21 08:28 AM</span>
+
+            <div class="chatlog__message " data-message-id="829875479933616159" id="message-829875479933616159">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「你說中村先生啊，我記得他是因為車禍去世的來著。」
+祭偏頭
+「原來優太也不記得嗎……我總覺得三年前的記憶有些模糊，照理來說不太可能啊，明明是那樣的事件……」
+「只有我有這種問題還好說，現在連優太跟豬狩君都一樣，我總覺得不對勁。」
+「我覺得……唔，等等可以回去辦公室找看看有沒有當時的資料。」
+「如果沒告訴豬狩君的話，應該是只有我們課內自己的調查。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829875844351787038" id="message-829875844351787038">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「英雄大片……噗哈哈哈—」
+聽到最後一句祭忍不住笑了出來，
+「聽起來很帥氣呢，好熱血的感覺……！」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 161 message(s)</div>
+</div>
+
+</body>
+
+</html>

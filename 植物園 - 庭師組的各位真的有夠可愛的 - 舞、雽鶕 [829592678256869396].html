@@ -1,0 +1,4122 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>植物園 - 舞、雽鶕</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        /* General */
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: Whitney;
+    src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+    font-weight: 700;
+}
+
+body {
+    font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    object-fit: contain;
+}
+
+.markdown {
+    max-width: 100%;
+    line-height: 1.3;
+    overflow-wrap: break-word;
+}
+
+.preserve-whitespace {
+    white-space: pre-wrap;
+}
+
+.spoiler {
+    /* width: fit-content; */
+    display: inline-block;
+    /* This is more consistent across browsers, the old attribute worked well under Chrome but not FireFox. */
+}
+
+.spoiler--hidden {
+    cursor: pointer;
+}
+
+.spoiler-text {
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-text {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler--hidden .spoiler-text::selection {
+    color: rgba(0, 0, 0, 0);
+}
+
+.spoiler-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.spoiler--hidden .spoiler-image {
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.spoiler--hidden .spoiler-image * {
+    filter: blur(44px);
+}
+
+.spoiler--hidden .spoiler-image:after {
+    content: "SPOILER";
+    color: #dcddde;
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 600;
+    padding: 100%;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    font-size: 0.9em;
+}
+
+.spoiler--hidden:hover .spoiler-image:after {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.quote {
+    margin: 0.1em 0;
+    padding-left: 0.6em;
+    border-left: 4px solid;
+    border-radius: 3px;
+}
+
+.pre {
+    font-family: "Consolas", "Courier New", Courier, monospace;
+}
+
+.pre--multiline {
+    margin-top: 0.25em;
+    padding: 0.5em;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+.pre--inline {
+    padding: 2px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+.mention {
+    border-radius: 3px;
+    padding: 0 2px;
+    color: #7289da;
+    background: rgba(114, 137, 218, .1);
+    font-weight: 500;
+}
+
+.emoji {
+    width: 1.25em;
+    height: 1.25em;
+    margin: 0 0.06em;
+    vertical-align: -0.4em;
+}
+
+.emoji--small {
+    width: 1em;
+    height: 1em;
+}
+
+.emoji--large {
+    width: 2.8em;
+    height: 2.8em;
+}
+
+/* Preamble */
+
+.preamble {
+    display: grid;
+    margin: 0 0.3em 0.6em 0.3em;
+    max-width: 100%;
+    grid-template-columns: auto 1fr;
+}
+
+.preamble__guild-icon-container {
+    grid-column: 1;
+}
+
+.preamble__guild-icon {
+    max-width: 88px;
+    max-height: 88px;
+}
+
+.preamble__entries-container {
+    grid-column: 2;
+    margin-left: 0.6em;
+}
+
+.preamble__entry {
+    font-size: 1.4em;
+}
+
+.preamble__entry--small {
+    font-size: 1em;
+}
+
+/* Chatlog */
+
+.chatlog {
+    max-width: 100%;
+}
+
+.chatlog__message-group {
+    display: grid;
+    margin: 0 0.6em;
+    padding: 0.9em 0;
+    border-top: 1px solid;
+    grid-template-columns: auto 1fr;
+}
+
+.chatlog__reference-symbol {
+    grid-column: 1;
+    border-style: solid;
+    border-width: 2px 0 0 2px;
+    border-radius: 8px 0 0 0;
+    margin-left: 16px;
+    margin-top: 8px;
+}
+
+.chatlog__reference {
+    display: flex;
+    grid-column: 2;
+    margin-left: 1.2em;
+    margin-bottom: 0.25em;
+    font-size: 0.875em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    align-items: center;
+}
+
+.chatlog__reference-avatar {
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    margin-right: 0.25em;
+}
+
+.chatlog__reference-name {
+    margin-right: 0.25em;
+    font-weight: 600;
+}
+
+.chatlog__reference-link {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chatlog__reference-link:hover {
+    text-decoration: none;
+}
+
+.chatlog__reference-content > * {
+    display: inline;
+}
+
+.chatlog__reference-edited-timestamp {
+    margin-left: 0.25em;
+    font-size: 0.8em;
+}
+
+.chatlog__author-avatar-container {
+    grid-column: 1;
+    width: 40px;
+    height: 40px;
+}
+
+.chatlog__author-avatar {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+}
+
+.chatlog__messages {
+    grid-column: 2;
+    margin-left: 1.2em;
+    min-width: 50%;
+}
+
+.chatlog__author-name {
+    font-weight: 500;
+}
+
+.chatlog__timestamp {
+    margin-left: 0.3em;
+    font-size: 0.75em;
+}
+
+.chatlog__message {
+    padding: 0.1em 0.3em;
+    margin: 0 -0.3em;
+    background-color: transparent;
+    transition: background-color 1s ease;
+}
+
+.chatlog__content {
+    font-size: 0.95em;
+    word-wrap: break-word;
+}
+
+.chatlog__edited-timestamp {
+    margin-left: 0.15em;
+    font-size: 0.8em;
+}
+
+.chatlog__attachment {
+    margin-top: 0.3em;
+}
+
+.chatlog__attachment-thumbnail {
+    vertical-align: top;
+    max-width: 45vw;
+    max-height: 500px;
+    border-radius: 3px;
+}
+
+.chatlog__attachment-container {
+    height: 40px;
+    width: 100%;
+    max-width: 520px;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.chatlog__attachment-icon {
+    float: left;
+    height: 100%;
+    margin-right: 10px;
+}
+
+.chatlog__attachment-icon > .a {
+    fill: #f4f5fb;
+    d: path("M50,935a25,25,0,0,1-25-25V50A25,25,0,0,1,50,25H519.6L695,201.32V910a25,25,0,0,1-25,25Z");
+}
+
+.chatlog__attachment-icon > .b {
+    fill: #7789c4;
+    d: path("M509.21,50,670,211.63V910H50V50H509.21M530,0H50A50,50,0,0,0,0,50V910a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50h0V191Z");
+}
+
+.chatlog__attachment-icon > .c {
+    fill: #f4f5fb;
+    d: path("M530,215a25,25,0,0,1-25-25V50a25,25,0,0,1,16.23-23.41L693.41,198.77A25,25,0,0,1,670,215Z");
+}
+
+.chatlog__attachment-icon > .d {
+    fill: #7789c4;
+    d: path("M530,70.71,649.29,190H530V70.71M530,0a50,50,0,0,0-50,50V190a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50Z");
+}
+
+.chatlog__attachment-filesize {
+    color: #72767d;
+    font-size: 12px;
+}
+
+.chatlog__attachment-filename {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.chatlog__embed {
+    display: flex;
+    margin-top: 0.3em;
+    max-width: 520px;
+}
+
+.chatlog__embed-color-pill {
+    flex-shrink: 0;
+    width: 0.25em;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.chatlog__embed-content-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em 0.6em;
+    border: 1px solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.chatlog__embed-content {
+    display: flex;
+    width: 100%;
+}
+
+.chatlog__embed-text {
+    flex: 1;
+}
+
+.chatlog__embed-author {
+    display: flex;
+    margin-bottom: 0.3em;
+    align-items: center;
+}
+
+.chatlog__embed-author-icon {
+    margin-right: 0.5em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.chatlog__embed-author-name {
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-title {
+    margin-bottom: 0.2em;
+    font-size: 0.875em;
+    font-weight: 600;
+}
+
+.chatlog__embed-description {
+    font-weight: 500;
+    font-size: 0.85em;
+}
+
+.chatlog__embed-fields {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.chatlog__embed-field {
+    flex: 0;
+    min-width: 100%;
+    max-width: 506px;
+    padding-top: 0.6em;
+    font-size: 0.875em;
+}
+
+.chatlog__embed-field--inline {
+    flex: 1;
+    flex-basis: auto;
+    min-width: 150px;
+}
+
+.chatlog__embed-field-name {
+    margin-bottom: 0.2em;
+    font-weight: 600;
+}
+
+.chatlog__embed-field-value {
+    font-weight: 500;
+}
+
+.chatlog__embed-thumbnail {
+    flex: 0;
+    margin-left: 1.2em;
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-image-container {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-image {
+    max-width: 500px;
+    max-height: 400px;
+    border-radius: 3px;
+}
+
+.chatlog__embed-footer {
+    margin-top: 0.6em;
+}
+
+.chatlog__embed-footer-icon {
+    margin-right: 0.2em;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.chatlog__embed-footer-text {
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+.chatlog__reactions {
+    display: flex;
+}
+
+.chatlog__reaction {
+    display: flex;
+    align-items: center;
+    margin: 0.35em 0.1em 0.1em 0.1em;
+    padding: 0.2em 0.35em;
+    border-radius: 3px;
+}
+
+.chatlog__reaction-count {
+    min-width: 9px;
+    margin-left: 0.35em;
+    font-size: 0.875em;
+}
+
+.chatlog__bot-tag {
+    position: relative;
+    top: -.2em;
+    margin-left: 0.3em;
+    padding: 0.05em 0.3em;
+    border-radius: 3px;
+    vertical-align: middle;
+    line-height: 1.3;
+    background: #7289da;
+    color: #ffffff;
+    font-size: 0.625em;
+    font-weight: 500;
+}
+
+/* Postamble */
+
+.postamble {
+    margin: 1.4em 0.3em 0.6em 0.3em;
+    padding: 1em;
+    border-top: 1px solid;
+}
+    </style>
+    <style>
+        /* General */
+
+body {
+    background-color: #36393e;
+    color: #dcddde;
+}
+
+a {
+    color: #0096cf;
+}
+
+.spoiler-text {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.spoiler--hidden .spoiler-text {
+    background-color: #202225;
+}
+
+.spoiler--hidden:hover .spoiler-text {
+    background-color: rgba(32, 34, 37, 0.8);
+}
+
+.quote {
+    border-color: #4f545c;
+}
+
+.pre {
+    background-color: #2f3136 !important;
+}
+
+.pre--multiline {
+    border-color: #282b30 !important;
+    color: #b9bbbe !important;
+}
+
+/* === Preamble === */
+
+.preamble__entry {
+    color: #ffffff;
+}
+
+/* Chatlog */
+
+.chatlog__message-group {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.chatlog__reference-symbol {
+    border-color: #4f545c;
+}
+
+.chatlog__reference {
+    color: #b5b6b8;
+}
+
+.chatlog__reference-link {
+    color: #b5b6b8;
+}
+
+.chatlog__reference-link:hover {
+    color: #ffffff;
+}
+
+.chatlog__reference-edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__author-name {
+    color: #ffffff;
+}
+
+.chatlog__timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__message--highlighted {
+    background-color: rgba(114, 137, 218, 0.2) !important;
+}
+
+.chatlog__message--pinned {
+    background-color: rgba(249, 168, 37, 0.05);
+}
+
+.chatlog__attachment-container {
+    background-color: #2f3136;
+    border-color: #292b2f;
+}
+
+.chatlog__edited-timestamp {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.chatlog__embed-color-pill--default {
+    background-color: rgba(79, 84, 92, 1);
+}
+
+.chatlog__embed-content-container {
+    background-color: rgba(46, 48, 54, 0.3);
+    border-color: rgba(46, 48, 54, 0.6);
+}
+
+.chatlog__embed-author-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-author-name-link {
+    color: #ffffff;
+}
+
+.chatlog__embed-title {
+    color: #ffffff;
+}
+
+.chatlog__embed-description {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-field-name {
+    color: #ffffff;
+}
+
+.chatlog__embed-field-value {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__embed-footer {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chatlog__reaction {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.chatlog__reaction-count {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Postamble */
+
+.postamble {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.postamble__entry {
+    color: #ffffff;
+}
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler--hidden');
+            }
+        }
+    </script>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="https://cdn.discordapp.com/icons/805107066934001705/cd905ff687530dc35a179fce3bcd6c3c.png" alt="Guild icon">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">植物園</div>
+        <div class="preamble__entry">庭師組的各位真的有夠可愛的 / 舞、雽鶕</div>
+
+
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 01:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="829592814156775434" id="message-829592814156775434">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">你們要去資料室對咩</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 01:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="829592845605142568" id="message-829592845605142568">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">沒錯</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 01:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="829592876844580864" id="message-829592876844580864">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">對噠</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 02:13 PM</span>
+
+            <div class="chatlog__message " data-message-id="829599793491083294" id="message-829599793491083294">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">你們發現神童也在</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829599988614561802" id="message-829599988614561802">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">然後要的話你們先過個偵查</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829600025054412800" id="message-829600025054412800">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">對資料庫的</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 02:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="829600496393781278" id="message-829600496393781278">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">cc 70 偵查</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="color: rgb(185,187,190)">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">08-Apr-21 02:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="829600497547608114" id="message-829600497547608114">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="阿嗨#9026">@我道歉</span>
+1D100 ≦ 70：
+57 → 通常成功：偵查</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 02:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="829600623510028329" id="message-829600623510028329">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「神童先生？」菱川走了進去，和神童打了聲招呼</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 02:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="829601133114425426" id="message-829601133114425426">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「菱川組長好。」神童也向妳點了點頭。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 02:19 PM</span>
+
+            <div class="chatlog__message " data-message-id="829601415000490014" id="message-829601415000490014">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「在找相模案的資料嗎？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829601480050212885" id="message-829601480050212885">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">說著，菱川也翻起了資料</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="HKTRPG#4989" style="color: rgb(185,187,190)">HKTRPG</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829600497547608114&#39;)">
+                    <span class="chatlog__reference-content">
+<span class="mention" title="阿嗨#9026">@我道歉</span>
+1D100 ≦ 70：
+57 → 通常成功：偵查                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 02:21 PM</span>
+
+            <div class="chatlog__message " data-message-id="829601906598084658" id="message-829601906598084658">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">除了歷往的案件，你還發現了相模事件的案件和關於邪教「人花教」的調查</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="阿嗨#9026" style="color: rgb(230,0,0)">我道歉</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829601415000490014&#39;)">
+                    <span class="chatlog__reference-content">
+「在找相模案的資料嗎？」                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 02:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="829602020385488946" id="message-829602020385488946">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「嗯。」神童又點了點頭。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 02:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="829602022747406336" id="message-829602022747406336">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">菱川拿出來看看</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 02:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="829602072852824104" id="message-829602072852824104">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">對神童可以過偵查</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 02:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="829602126313029693" id="message-829602126313029693">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">cc 70 偵查神童</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="color: rgb(185,187,190)">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">08-Apr-21 02:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="829602127944744970" id="message-829602127944744970">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="阿嗨#9026">@我道歉</span>
+1D100 ≦ 70：
+92 → 失敗：偵查神童</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 02:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="829602152166850590" id="message-829602152166850590">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img class="emoji emoji--large" alt="what" title="what" src="https://cdn.discordapp.com/emojis/805130305593016381.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829602182625099799" id="message-829602182625099799">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//乎安上</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 02:23 PM</span>
+
+            <div class="chatlog__message " data-message-id="829602335458066492" id="message-829602335458066492">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//你這邊等乎安上再繼續好惹</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="829615695951298630" id="message-829615695951298630">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Cc 70 偵查</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="color: rgb(185,187,190)">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">08-Apr-21 03:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="829615697000267786" id="message-829615697000267786">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="男人都騙子#6047">@男人都騙子</span>
+1D100 ≦ 70：
+39 → 通常成功：偵查</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="829615758714994748" id="message-829615758714994748">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Cc 70 偵查</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="color: rgb(185,187,190)">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">08-Apr-21 03:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="829615759851257886" id="message-829615759851257886">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="男人都騙子#6047">@男人都騙子</span>
+1D100 ≦ 70：
+16 → 困難成功：偵查</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="829615808228753408" id="message-829615808228753408">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//兩個都成功了</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="829616103902150705" id="message-829616103902150705">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//視力很好</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:21 PM</span>
+
+            <div class="chatlog__message " data-message-id="829616808289763359" id="message-829616808289763359">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//<img class="emoji " alt="dog" title="dog" src="https://cdn.discordapp.com/emojis/805282473290235924.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829617717467938816" id="message-829617717467938816">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「神童前輩您好」我向神童鞠躬</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:27 PM</span>
+
+            <div class="chatlog__message " data-message-id="829618482450530335" id="message-829618482450530335">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">你發現神童手裡拿著一顆透明的圓形物，只有彈珠的一半大</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829618523193999380" id="message-829618523193999380">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//然後檔案要看什麼再跟我說</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="莫薩是真愛#4394" style="color: rgb(232,192,42)">矢島正義</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829601906598084658&#39;)">
+                    <span class="chatlog__reference-content">
+除了歷往的案件，你還發現了相模事件的案件和關於邪教「人花教」的調查                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="829618574205255680" id="message-829618574205255680">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//那個</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829618607985262649" id="message-829618607985262649">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//人花教</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="829618989554073620" id="message-829618989554073620">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//我這節音樂</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829619052401655808" id="message-829619052401655808">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//我下課再來</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="829620197567889458" id="message-829620197567889458">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//我有第八節呦—————</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:37 PM</span>
+
+            <div class="chatlog__message chatlog__message--pinned" data-message-id="829620881374183444" id="message-829620881374183444">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">在相模案發生後沒多久出現了一個邪教組織。
+他們被稱作人花教，教旨是要回歸自然並奉獻於自然。
+他們認為人類應該以最和平的死亡方式便是回歸自然，因此他們似乎會將屍體包裹在鮮花中或將屍體放在花圃之中。
+該邪教成員會在脖子處打一個小孔並植入種子，作為入會儀式。
+這個儀式不是強制性的。
+但想要獲得恩典就必須選擇一種種子植入。
+ 
+這個邪教組織曾經在暗地裡十分活躍，不過現在已經幾乎銷聲匿跡。“南天野”是一位重要的參考人物，曾與其中一位失踪者接觸並經常出現在教會上。
+她的住所是“●●大都會XX-ku XXX-XX-XXX”，但從三年前開始下落不明。他的公寓已經接受過調查，但沒有太多有用的資訊。
+與南天野的消失一同失去消息的還有整個人花教。</span>
+
+                                <span class="chatlog__edited-timestamp" title="08-Apr-21 03:37 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="829621382316294174" id="message-829621382316294174">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">舞開始翻找有關「南天野」的資料，還有那位失蹤者以及她常去的教會的相關訊息</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:42 PM</span>
+
+            <div class="chatlog__message " data-message-id="829622305583136778" id="message-829622305583136778">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">偵查夠夠</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:43 PM</span>
+
+            <div class="chatlog__message " data-message-id="829622368011026432" id="message-829622368011026432">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">cc 70 這種時候不是圖書館嗎</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="color: rgb(185,187,190)">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">08-Apr-21 03:43 PM</span>
+
+            <div class="chatlog__message " data-message-id="829622369097351228" id="message-829622369097351228">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="阿嗨#9026">@我道歉</span>
+1D100 ≦ 70：
+51 → 通常成功：這種時候不是圖書館嗎</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:43 PM</span>
+
+            <div class="chatlog__message " data-message-id="829622474819371029" id="message-829622474819371029">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我翻找相模前輩的死亡報告</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="阿嗨#9026" style="color: rgb(230,0,0)">我道歉</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829622368011026432&#39;)">
+                    <span class="chatlog__reference-content">
+cc 70 這種時候不是圖書館嗎                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:44 PM</span>
+
+            <div class="chatlog__message " data-message-id="829622805070348318" id="message-829622805070348318">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">你並沒有找到南天野的相關訊息。
+畢竟南天野這個人幾乎如同憑空消失一般。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829622884203888650" id="message-829622884203888650">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">但這時你注意到人花教的文件夾上有一個小缺口。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="829622967465803786" id="message-829622967465803786">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//缺口長怎樣</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="829623015645118494" id="message-829623015645118494">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//可以從缺口打開</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="829623077662752779" id="message-829623077662752779">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「前輩，您手上的東西是什麼」我問神童</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="829623088345776131" id="message-829623088345776131">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">舞從缺口將文件夾打開</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:46 PM</span>
+
+            <div class="chatlog__message " data-message-id="829623215335669781" id="message-829623215335669781">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">裡面有一張照片，照片的背面寫著南天野。
+看來這張照片的主人便是南天野</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:46 PM</span>
+
+            <div class="chatlog__message " data-message-id="829623271145865217" id="message-829623271145865217">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//有臉嗎</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:46 PM</span>
+
+            <div class="chatlog__message " data-message-id="829623282915082240" id="message-829623282915082240">
+
+                    <div class="chatlog__attachment">
+                        <div class="" onclick="">
+                            <div class="">
+                                    <a href="https://cdn.discordapp.com/attachments/829592678256869396/829623282692521984/268253_nynzKqLj.png">
+                                        <img class="chatlog__attachment-thumbnail" src="https://cdn.discordapp.com/attachments/829592678256869396/829623282692521984/268253_nynzKqLj.png" alt="Image attachment" title="Image: 268253_nynzKqLj.png (273.06 KB)">
+                                    </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:46 PM</span>
+
+            <div class="chatlog__message " data-message-id="829623320206770176" id="message-829623320206770176">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//男的？</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:46 PM</span>
+
+            <div class="chatlog__message " data-message-id="829623336774533181" id="message-829623336774533181">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//嗯</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:47 PM</span>
+
+            <div class="chatlog__message " data-message-id="829623361503625276" id="message-829623361503625276">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//好</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:47 PM</span>
+
+            <div class="chatlog__message " data-message-id="829623596228935680" id="message-829623596228935680">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「⋯⋯⋯」舞將照片收了起來</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829623633210507266" id="message-829623633210507266">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//她常去的教堂有資料嗎</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="男人都騙子#6047" style="color: rgb(202,145,0)">男人都騙子</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829623077662752779&#39;)">
+                    <span class="chatlog__reference-content">
+「前輩，您手上的東西是什麼」我問神童                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:48 PM</span>
+
+            <div class="chatlog__message " data-message-id="829623817412280371" id="message-829623817412280371">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「我也不知道是什麼，這是的場放在相模事件文件夾中的東西。」神童轉了轉手上的透明小球。</span>
+
+                                <span class="chatlog__edited-timestamp" title="08-Apr-21 03:49 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="阿嗨#9026" style="color: rgb(230,0,0)">我道歉</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829623633210507266&#39;)">
+                    <span class="chatlog__reference-content">
+//她常去的教堂有資料嗎                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:49 PM</span>
+
+            <div class="chatlog__message " data-message-id="829623938941190157" id="message-829623938941190157">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//沒有</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829623969036500993" id="message-829623969036500993">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//警方沒找到他們的根據地</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:49 PM</span>
+
+            <div class="chatlog__message " data-message-id="829624055162208286" id="message-829624055162208286">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//啊，好</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829624131531964457" id="message-829624131531964457">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//剩下的我等ㄇㄒ吧</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="829624734324883457" id="message-829624734324883457">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//有死亡報告嗎</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="男人都騙子#6047" style="color: rgb(202,145,0)">男人都騙子</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829622474819371029&#39;)">
+                    <span class="chatlog__reference-content">
+我翻找相模前輩的死亡報告                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:54 PM</span>
+
+            <div class="chatlog__message chatlog__message--pinned" data-message-id="829625208885215263" id="message-829625208885215263">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">註明日期是三年前。
+ 
+警察相模原一大早就被發現了。
+她在教堂內被植物懸掛，腹部深切。
+死亡原因是失血。
+
+第一發現者是都廳警局的菱川組，總共有4人。
+相模原的屍體受到嚴重破壞，他的臉被無法辨認的花朵和藤蔓扭曲覆蓋，但根據間接證據，被確定為相模原。
+被發現時已經離死亡五到六個小時，儘管是冬天，細胞嚴重崩潰，因此尚未進行詳細的DNA研究。
+
+註：進行了記錄時，菱川組的心理狀況不好，似乎有必要進行另外的調查。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829625243869773854" id="message-829625243869773854">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//對了 現在也是冬天</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:55 PM</span>
+
+            <div class="chatlog__message " data-message-id="829625393974738986" id="message-829625393974738986">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//那有我們的身體報告嗎</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="男人都騙子#6047" style="color: rgb(202,145,0)">男人都騙子</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829625393974738986&#39;)">
+                    <span class="chatlog__reference-content">
+//那有我們的身體報告嗎                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:56 PM</span>
+
+            <div class="chatlog__message " data-message-id="829625702579175445" id="message-829625702579175445">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">你們能找到的最多就是這樣，當然有需要更高權限才能查閱的資料室，但你們目前無法進入，也不知道裡面是否有自己需要的資訊</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:56 PM</span>
+
+            <div class="chatlog__message " data-message-id="829625756074115132" id="message-829625756074115132">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「前輩，我能看看那個嗎？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:56 PM</span>
+
+            <div class="chatlog__message " data-message-id="829625764852662272" id="message-829625764852662272">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">然後看報告的人過靈感</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:56 PM</span>
+
+            <div class="chatlog__message " data-message-id="829625795278274604" id="message-829625795278274604">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我向神童前輩發問</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:56 PM</span>
+
+            <div class="chatlog__message " data-message-id="829625845324709928" id="message-829625845324709928">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">cc 70 靈感</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/544462904037081138/826b76664e4c68ff4d29076c48a02bed.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="HKTRPG#4989" data-user-id="544462904037081138" style="color: rgb(185,187,190)">HKTRPG</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">08-Apr-21 03:56 PM</span>
+
+            <div class="chatlog__message " data-message-id="829625846913957898" id="message-829625846913957898">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="阿嗨#9026">@我道歉</span>
+1D100 ≦ 70：
+17 → 困難成功：靈感</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:57 PM</span>
+
+            <div class="chatlog__message " data-message-id="829625883576500244" id="message-829625883576500244">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「喔？」神童點了點頭，把東西遞給你。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:57 PM</span>
+
+            <div class="chatlog__message " data-message-id="829625955898359809" id="message-829625955898359809">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我仔細端詳那顆小球</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="男人都騙子#6047" style="color: rgb(202,145,0)">男人都騙子</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829625955898359809&#39;)">
+                    <span class="chatlog__reference-content">
+我仔細端詳那顆小球                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:58 PM</span>
+
+            <div class="chatlog__message " data-message-id="829626177782153236" id="message-829626177782153236">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">就是硬質的半透明物</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:58 PM</span>
+
+            <div class="chatlog__message " data-message-id="829626291559989259" id="message-829626291559989259">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「前輩我能帶走這個嗎？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:59 PM</span>
+
+            <div class="chatlog__message " data-message-id="829626454878453770" id="message-829626454878453770">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「啊...證物還是別隨意帶走吧...」神童有些為難。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:59 PM</span>
+
+            <div class="chatlog__message " data-message-id="829626552467718154" id="message-829626552467718154">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「好的」我點點頭
+並將玻璃球掃過報告</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 03:59 PM</span>
+
+            <div class="chatlog__message " data-message-id="829626571547607051" id="message-829626571547607051">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">菱川把她看見的資料重點大略的紀錄進筆記本，並且將照片夾進筆記裡</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829626795471929365" id="message-829626795471929365">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「是什麼東西的證物？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829626864792240178" id="message-829626864792240178">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">菱川過去問道</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:01 PM</span>
+
+            <div class="chatlog__message " data-message-id="829626901130641438" id="message-829626901130641438">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「不清楚呢，所以我才拿來看了看。」神童皺起眉。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:01 PM</span>
+
+            <div class="chatlog__message " data-message-id="829627011096903721" id="message-829627011096903721">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//掃過報告有什麼東東ㄇ<img class="emoji " alt="11" title="11" src="https://cdn.discordapp.com/emojis/806854438249299999.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="829627141041422396" id="message-829627141041422396">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//什麼掃過報告<img class="emoji " alt="what" title="what" src="https://cdn.discordapp.com/emojis/805130305593016381.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="829627161782386758" id="message-829627161782386758">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「那是在哪裡找到的證物？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="829627209844916264" id="message-829627209844916264">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//好吧那就沒有</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="829627227103821855" id="message-829627227103821855">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「連紀錄都沒有呢。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="829627269865144321" id="message-829627269865144321">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我將玻璃球透過光觀察</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="829627373497352212" id="message-829627373497352212">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">半透著光。</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="829627397170266142" id="message-829627397170266142">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「真奇怪，怎麼會有這種東西？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="829627476916699198" id="message-829627476916699198">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「還看不出有什麼特別的」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829627496848293959" id="message-829627496848293959">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我皺著眉</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="阿嗨#9026" style="color: rgb(230,0,0)">我道歉</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829627161782386758&#39;)">
+                    <span class="chatlog__reference-content">
+「那是在哪裡找到的證物？」                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="829627588146102282" id="message-829627588146102282">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//坐等這句.jpg</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829627632579903558" id="message-829627632579903558">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//那東西一定有問題</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:04 PM</span>
+
+            <div class="chatlog__message " data-message-id="829627677459218492" id="message-829627677459218492">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//肯定有鬼</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="阿嗨#9026" style="color: rgb(230,0,0)">我道歉</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829627397170266142&#39;)">
+                    <span class="chatlog__reference-content">
+「真奇怪，怎麼會有這種東西？」                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:04 PM</span>
+
+            <div class="chatlog__message " data-message-id="829627749429542922" id="message-829627749429542922">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//就縮 沒有記錄(&#180; . .̫ . `)</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:05 PM</span>
+
+            <div class="chatlog__message " data-message-id="829627910457131029" id="message-829627910457131029">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//不是，他在哪裡找到的啊</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:05 PM</span>
+
+            <div class="chatlog__message " data-message-id="829627968166953080" id="message-829627968166953080">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我拿手機用鏡頭對準小球</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:05 PM</span>
+
+            <div class="chatlog__message " data-message-id="829627983752069153" id="message-829627983752069153">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//資料室的角落嗎</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:05 PM</span>
+
+            <div class="chatlog__message " data-message-id="829628016547463179" id="message-829628016547463179">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//好想燒他歐<img class="emoji " alt="11" title="11" src="https://cdn.discordapp.com/emojis/806854438249299999.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+        <div class="chatlog__reference-symbol">
+        </div>
+        <div class="chatlog__reference">
+                <img class="chatlog__reference-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+                <span class="chatlog__reference-name" title="阿嗨#9026" style="color: rgb(230,0,0)">我道歉</span>
+                <a class="chatlog__reference-link" href="#" onclick="scrollToMessage(event, &#39;829627983752069153&#39;)">
+                    <span class="chatlog__reference-content">
+//資料室的角落嗎                    </span>
+
+                </a>
+        </div>
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:05 PM</span>
+
+            <div class="chatlog__message " data-message-id="829628075440472147" id="message-829628075440472147">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//上面有說是在相模原的資料夾中找到的</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="829628176321216533" id="message-829628176321216533">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「要不要拿去給鑑識科。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829628209599217664" id="message-829628209599217664">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">菱川提議道</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="829628276707688448" id="message-829628276707688448">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「贊成」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829628291395616768" id="message-829628291395616768">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我點頭</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="829628370740051998" id="message-829628370740051998">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//等等喔 因為另外一組連要去哪都還沒說</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:07 PM</span>
+
+            <div class="chatlog__message " data-message-id="829628407649402901" id="message-829628407649402901">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//豪</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/744822622545772557/27fc7c8a25d9c439ac080abe6dc26b8b.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="莫薩是真愛#4394" data-user-id="744822622545772557" style="color: rgb(232,192,42)">矢島正義</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:07 PM</span>
+
+            <div class="chatlog__message " data-message-id="829628412108865546" id="message-829628412108865546">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//你們先停
+//我怕時間線錯亂</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">08-Apr-21 04:07 PM</span>
+
+            <div class="chatlog__message " data-message-id="829628452906205184" id="message-829628452906205184">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//<img class="emoji " alt="yeah" title="yeah" src="https://cdn.discordapp.com/emojis/805126271679070208.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">09-Apr-21 03:40 PM</span>
+
+            <div class="chatlog__message " data-message-id="829983980967034891" id="message-829983980967034891">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">你的手機傳來了菱川的訊息</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829984031504203777" id="message-829984031504203777">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「把該說的話好好說」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">09-Apr-21 03:40 PM</span>
+
+            <div class="chatlog__message " data-message-id="829984107328700419" id="message-829984107328700419">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「好」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829984128555417660" id="message-829984128555417660">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我回應了</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829984198138921021" id="message-829984198138921021">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">［⋯⋯好難好難好難<img class="emoji " alt="cry" title="cry" src="https://cdn.discordapp.com/emojis/805282154221273139.png"> ］</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">09-Apr-21 03:43 PM</span>
+
+            <div class="chatlog__message " data-message-id="829984744523431977" id="message-829984744523431977">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">她發了一個很可愛的加油貼圖給你
+看起來很少女很不服了課長的風格</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829984834121236501" id="message-829984834121236501">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">『女孩子應該⋯⋯比較喜歡這種吧？』</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">09-Apr-21 03:44 PM</span>
+
+            <div class="chatlog__message " data-message-id="829985134652030976" id="message-829985134652030976">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">［⋯⋯我加油<img class="emoji " alt="cry" title="cry" src="https://cdn.discordapp.com/emojis/805282154221273139.png"> ］</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="829985215043600404" id="message-829985215043600404">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">［還有原來課長喜歡這種的<img class="emoji " alt="the_world" title="the_world" src="https://cdn.discordapp.com/emojis/805274489129926676.png"> ］</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">09-Apr-21 04:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="830000398001111050" id="message-830000398001111050">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「課長我跟優太這邊結束了」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="830000453948276746" id="message-830000453948276746">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我傳了一封訊息</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">09-Apr-21 04:47 PM</span>
+
+            <div class="chatlog__message " data-message-id="830000960087523389" id="message-830000960087523389">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「辛苦了」
+她不冷不熱的回道</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">09-Apr-21 04:47 PM</span>
+
+            <div class="chatlog__message " data-message-id="830001055562727454" id="message-830001055562727454">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「我們要回哪裡集合呢？」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">09-Apr-21 04:48 PM</span>
+
+            <div class="chatlog__message " data-message-id="830001105802362930" id="message-830001105802362930">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「零課吧」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="830001192729051136" id="message-830001192729051136">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「你剛剛沒在聽嗎」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">09-Apr-21 04:48 PM</span>
+
+            <div class="chatlog__message " data-message-id="830001244083978250" id="message-830001244083978250">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「啊⋯⋯抱歉」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="830001292583108638" id="message-830001292583108638">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我傳了一個跪下的貼圖</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">09-Apr-21 04:49 PM</span>
+
+            <div class="chatlog__message " data-message-id="830001385306587136" id="message-830001385306587136">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">你發現課長已讀了一陣子</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="830001500960194581" id="message-830001500960194581">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">最後傳了一個沒關係的可愛貼圖，跟剛剛那個是同款</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">09-Apr-21 04:50 PM</span>
+
+            <div class="chatlog__message " data-message-id="830001774554251274" id="message-830001774554251274">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">［<img class="emoji " alt="the_world" title="the_world" src="https://cdn.discordapp.com/emojis/805274489129926676.png"> ⋯⋯課長也會這樣啊］</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="830001829835440159" id="message-830001829835440159">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">我內心驚訝</span>
+
+                                <span class="chatlog__edited-timestamp" title="09-Apr-21 04:51 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">09-Apr-21 04:51 PM</span>
+
+            <div class="chatlog__message " data-message-id="830001935708717066" id="message-830001935708717066">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//星爆乎安</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">09-Apr-21 04:51 PM</span>
+
+            <div class="chatlog__message " data-message-id="830001960379875368" id="message-830001960379875368">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">//星爆</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">12-Apr-21 02:50 PM</span>
+
+            <div class="chatlog__message " data-message-id="831058760449130506" id="message-831058760449130506">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">良久，你的手機傳來了菱川的訊息</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="831058798666842123" id="message-831058798666842123">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「所以你說的⋯⋯包庇。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="831058813322395668" id="message-831058813322395668">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「是什麼。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="831058837507014706" id="message-831058837507014706">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「相模做了什麼。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">12-Apr-21 02:51 PM</span>
+
+            <div class="chatlog__message " data-message-id="831058883702816800" id="message-831058883702816800">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「這一切都是我的猜測」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="831058922731077662" id="message-831058922731077662">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「我不覺得相模前輩死了」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="831058980196843530" id="message-831058980196843530">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「我不相信三年前的他死了」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">12-Apr-21 02:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="831059134026612766" id="message-831059134026612766">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「我記得她的另一個死狀。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="831059173671698462" id="message-831059173671698462">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「但也就只是記得而已。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">12-Apr-21 02:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="831059225400442882" id="message-831059225400442882">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「長什麼樣子」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="831059252973797407" id="message-831059252973797407">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「為什麼妳不說」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">12-Apr-21 02:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="831059298003058768" id="message-831059298003058768">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「額頭被開孔。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="831059328102301726" id="message-831059328102301726">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「我昨天才想起來。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">12-Apr-21 02:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="831059368161706014" id="message-831059368161706014">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">雽鶕已讀</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="831059412230864967" id="message-831059412230864967">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">過了幾分鐘</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="831059440040017980" id="message-831059440040017980">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「我們去廢墟吧」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/620226179919773698/ce80077450120c56bdbc08cdbbe99da3.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="阿嗨#9026" data-user-id="620226179919773698" style="color: rgb(230,0,0)">我道歉</span>
+
+
+        <span class="chatlog__timestamp">12-Apr-21 02:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="831059466903486474" id="message-831059466903486474">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「上車」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="831059513750192160" id="message-831059513750192160">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「我載你們過去。」</span>
+
+                                <span class="chatlog__edited-timestamp" title="12-Apr-21 02:53 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+<div class="chatlog__message-group">
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="https://cdn.discordapp.com/avatars/791198539354079232/67dd7af3f81dfd5f59d3c3a0fdd808c4.png" alt="Avatar">
+    </div>
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="男人都騙子#6047" data-user-id="791198539354079232" style="color: rgb(202,145,0)">男人都騙子</span>
+
+
+        <span class="chatlog__timestamp">12-Apr-21 02:54 PM</span>
+
+            <div class="chatlog__message " data-message-id="831059562743857152" id="message-831059562743857152">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">「好。」</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 150 message(s)</div>
+</div>
+
+</body>
+
+</html>
